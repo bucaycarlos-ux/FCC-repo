@@ -33,7 +33,7 @@ import { useMenu } from './base/MenuContext';
 import { getPersonalSaludId } from '../services/personalsaludServices';
 import { API_IMAGE_URL } from '../services/apiConfig';
 import useImageCache from './global/UseImageCache';
-import { createAuditoria } from '../services/auditoriaServices';
+import { logAuditAction } from '../services/auditoriaServices';
 
 
 
@@ -100,21 +100,8 @@ function NavbarAdmin({ onDrawerToggle }) {
     switch (action) {
       case 'logout':
         try {
-          const logoutTime = new Date();
-          const ecuadorTime = new Intl.DateTimeFormat('es-EC', {
-            timeZone: 'America/Guayaquil',
-            hour: '2-digit',
-            minute: '2-digit',
-            second: '2-digit',
-            hour12: false
-          }).format(logoutTime);
-
-          await createAuditoria({
-            id_usuario: userData.id_usuario,
-            modulo: "Login",
-            operacion: "Cerrar Sesión",
-            detalle: `Usuario ${userData.id_usuario} cerró sesión a las ${ecuadorTime}`,
-            hora_salida: ecuadorTime
+          await logAuditAction('CERRAR_SESION', { 
+            motivo: 'El usuario hizo clic en el botón de cerrar sesión.' 
           });
 
           logout();
@@ -138,22 +125,9 @@ function NavbarAdmin({ onDrawerToggle }) {
   useEffect(() => {
     const handleWindowClose = async (event) => {
       if (userData) {
-        const logoutTime = new Date();
-        const ecuadorTime = new Intl.DateTimeFormat('es-EC', {
-          timeZone: 'America/Guayaquil',
-          hour: '2-digit',
-          minute: '2-digit',
-          second: '2-digit',
-          hour12: false
-        }).format(logoutTime);
-
         try {
-          await createAuditoria({
-            id_usuario: userData.id_usuario,
-            modulo: "Login",
-            operacion: "Cerrar Sesión",
-            detalle: `Usuario ${userData.id_usuario} cerró la ventana a las ${ecuadorTime}`,
-            hora_salida: ecuadorTime
+          await logAuditAction('CERRAR_SESION', { 
+            motivo: 'El usuario cerró la pestaña o el navegador.' 
           });
         } catch (error) {
           console.error('Error creating logout audit:', error);
