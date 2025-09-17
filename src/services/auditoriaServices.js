@@ -72,7 +72,7 @@ const createAuditoria = async (data = {}) => {
     const currentDate = new Date();
     const formattedData = {
       ...data,
-      fecha: formatEcuadorDateTime(currentDate),
+      fecha: currentDate,
       hora_ingreso: data.hora_ingreso || formatEcuadorTime(currentDate),
       hora_salida: data.hora_salida || formatEcuadorTime(currentDate)
     };
