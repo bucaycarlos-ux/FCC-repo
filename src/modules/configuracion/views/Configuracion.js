@@ -23,7 +23,7 @@ import {
 } from "@mui/icons-material";
 import Drawer from "../../../components/Drawer";
 import NavbarAdmin from "../../../components/NavbarAdmin";
-import {createAuditoria,} from "../../../services/auditoriaServices";
+import { logAuditAction } from "../../../services/auditoriaServices";
 import { getCurrentUserId } from "../../../utils/userUtils";
 const Configuracion = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -58,15 +58,7 @@ const Configuracion = () => {
         fecha_modificacion: new Date().toISOString()
       };
 
-      const auditData = {
-        id_usuario: loggedInUserId,
-        modulo: "Configuración",
-        operacion: "Eliminar",
-        detalle: JSON.stringify(detailedDescription),
-        fecha: new Date().toISOString()
-      };
-
-      await createAuditoria(auditData);
+      await logAuditAction('ELIMINAR_CUENTA_CONFIG', detailedDescription);
       setOpenDeleteDialog(false);
     } catch (error) {
       console.error('Error al eliminar cuenta:', error);
@@ -97,15 +89,7 @@ const Configuracion = () => {
         fecha_modificacion: new Date().toISOString()
       };
 
-      const auditData = {
-        id_usuario: loggedInUserId,
-        modulo: "Configuración",
-        operacion: "Editar",
-        detalle: JSON.stringify(detailedDescription),
-        fecha: new Date().toISOString()
-      };
-
-      await createAuditoria(auditData);
+      await logAuditAction('CAMBIAR_CONTRASENA_CONFIG', detailedDescription);
       setOpenPasswordDialog(false);
     } catch (error) {
       console.error('Error al cambiar contraseña:', error);
