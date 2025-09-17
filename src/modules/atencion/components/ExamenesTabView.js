@@ -25,7 +25,7 @@ import { usePacienteContext } from '../../../components/base/PacienteContext';
 import { API_IMAGE_URL } from "../../../services/apiConfig";
 import ExamenModal from './ExamenModal'; // Asumimos que crearás este componente
 // Add import
-import { createAuditoria, detalle_data } from "../../../services/auditoriaServices";
+import { logAuditAction } from "../../../services/auditoriaServices";
 
 const ExamenesTabView = () => {
   const { selectedPaciente } = usePacienteContext();
@@ -68,15 +68,11 @@ const ExamenesTabView = () => {
 
   const handleDeleteExamen = async (id) => {
     try {
+      const examenToDelete = examenes.find(e => e.id_examen === id);
       await deleteExamen(id);
-      // Add audit
-      const data_auditoria = {
-        id_usuario: selectedPaciente,
-        modulo: "Exámenes",
-        operacion: "Eliminar",
-        detalle: detalle_data({ id_examen: id }).deleteSql
-      };
-      await createAuditoria(data_auditoria);
+      if (examenToDelete) {
+        await logAuditAction('ELIMINAR_EXAMEN', { datosEliminados: examenToDelete });
+      }
       fetchExamenes();
     } catch (error) {
       console.error('Error deleting examen:', error);

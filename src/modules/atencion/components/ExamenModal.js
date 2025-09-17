@@ -13,7 +13,7 @@ import {
 import { styled } from '@mui/material/styles';
 import { createExamen, updateExamen } from '../../../services/examenServices';
 // Add import
-import { createAuditoria, detalle_data } from "../../../services/auditoriaServices";
+import { logAuditAction } from "../../../services/auditoriaServices";
 
 const StyledModal = styled(Modal)(({ theme }) => ({
   display: 'flex',
@@ -81,24 +81,13 @@ const ExamenModal = ({ open, onClose, examen, onSave, selectedPaciente }) => {
 
       if (examen) {
         await updateExamen(examen.id_examen, formDataObj);
-        // Add audit for update
-        const data_auditoria = {
-          id_usuario: selectedPaciente,
-          modulo: "Exámenes",
-          operacion: "Update",
-          detalle: detalle_data(formData).updateSql
-        };
-        await createAuditoria(data_auditoria);
+        await logAuditAction('ACTUALIZAR_EXAMEN', { 
+          datosAnteriores: examen, 
+          datosNuevos: formData 
+        });
       } else {
-        await createExamen(formDataObj);
-        // Add audit for create
-        const data_auditoria = {
-          id_usuario: selectedPaciente,
-          modulo: "Exámenes",
-          operacion: "Crear",
-          detalle: detalle_data(formData).insertSql
-        };
-        await createAuditoria(data_auditoria);
+        const newExamen = await createExamen(formDataObj);
+        await logAuditAction('CREAR_EXAMEN', { datosNuevos: newExamen });
       }
       onSave();
       onClose();

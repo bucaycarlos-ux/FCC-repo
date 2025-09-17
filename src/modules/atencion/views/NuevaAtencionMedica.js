@@ -32,7 +32,7 @@ import {getHistoria,updateHistoria,} from "../../../services/historiaServices";
 import {organs,regions,NewAtencionSteps,} from "../../../components/data/Data";
 import { usePacienteContext } from "../../../components/base/PacienteContext";
 import Antecedentes from "../../historia/components/Antecedentes";
-import {createAuditoria,} from "../../../services/auditoriaServices";
+import { logAuditAction } from "../../../services/auditoriaServices";
 import { getCurrentUserId } from "../../../utils/userUtils";
 const steps = NewAtencionSteps;
 
@@ -372,13 +372,7 @@ export default function NuevaAtencionMedica() {
         fecha_modificacion: currentDate.toISOString()
       };
 
-      await createAuditoria({
-        id_usuario: loggedInUserId,
-        modulo: "Atención Médica",
-        operacion: "Crear",
-        detalle: JSON.stringify(atencionAuditDescription),
-        fecha: currentDate.toISOString()
-      });
+      await logAuditAction('CREAR_ATENCION_MEDICA', atencionAuditDescription);
 
       const signosVitales = {
         id_historia: selectedPaciente,
@@ -412,13 +406,7 @@ export default function NuevaAtencionMedica() {
         fecha_modificacion: currentDate.toISOString()
       };
 
-      await createAuditoria({
-        id_usuario: loggedInUserId,
-        modulo: "Signos Vitales",
-        operacion: "Crear",
-        detalle: JSON.stringify(signosVitalesAuditDescription),
-        fecha: currentDate.toISOString()
-      });
+            await logAuditAction('CREAR_SIGNOS_VITALES', signosVitalesAuditDescription);
 
       // Update historia if not a control consultation
       if (consultType !== "control") {
@@ -446,13 +434,7 @@ export default function NuevaAtencionMedica() {
           fecha_modificacion: currentDate.toISOString()
         };
 
-        await createAuditoria({
-          id_usuario: loggedInUserId,
-          modulo: "Historia",
-          operacion: "Editar",
-          detalle: JSON.stringify(historiaAuditDescription),
-          fecha: currentDate.toISOString()
-        });
+        await logAuditAction('ACTUALIZAR_HISTORIA_ATENCION', historiaAuditDescription);
       }
 
       setSaveSuccess(true);

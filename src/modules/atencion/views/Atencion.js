@@ -23,10 +23,7 @@ import AtencionButton from "../components/AtencionButton";
 import CuadroAtenciones from "../components/CuadroAtenciones";
 import { usePacienteContext } from "../../../components/base/PacienteContext";
 import ExamenesTabView from "../components/ExamenesTabView";
-import {
-  createAuditoria,
-  detalle_data,
-} from "../../../services/auditoriaServices";
+import { logAuditAction } from "../../../services/auditoriaServices";
 import { getCurrentUserId } from "../../../utils/userUtils";
 const Atencion = () => {
   const [drawerOpen, setDrawerOpen] = useState(false);
@@ -80,15 +77,7 @@ const Atencion = () => {
             fecha_modificacion: new Date().toISOString()
           };
 
-          const auditData = {
-            id_usuario: loggedInUserId,
-            modulo: "Atencion",
-            operacion: "CONSULTAR1",
-            detalle: JSON.stringify(detailedDescription),
-            fecha: new Date().toISOString()
-          };
-
-          await createAuditoria(auditData);
+          await logAuditAction('CONSULTAR_ATENCION', detailedDescription);
 
           if (atencionesData.length === 0) {
             setIsFirstAttention(true);

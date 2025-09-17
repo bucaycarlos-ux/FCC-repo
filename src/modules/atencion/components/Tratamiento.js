@@ -9,7 +9,7 @@ import EditIcon from '@mui/icons-material/Edit';
 import { getExamenByHistoria, createExamen, deleteExamen, updateExamen } from '../../../services/examenServices';
 import { usePacienteContext } from '../../../components/base/PacienteContext';
 import { API_IMAGE_URL } from "../../../services/apiConfig";
-import { createAuditoria } from '../../../services/auditoriaServices';
+import { logAuditAction } from '../../../services/auditoriaServices';
 import { getCurrentUserId } from "../../../utils/userUtils";
 
 const StyledModal = styled(Modal)(({ theme }) => ({
@@ -142,13 +142,7 @@ const Tratamiento = ({ formData, setFormData }) => {
           fecha_modificacion: new Date().toISOString()
         };
 
-        await createAuditoria({
-          id_usuario: loggedInUserId,
-          modulo: "Examenes",
-          operacion: "Editar1",
-          detalle: JSON.stringify(auditDescription),
-          fecha: new Date().toISOString()
-        });
+        await logAuditAction('ACTUALIZAR_EXAMEN', auditDescription);
       } else {
         response = await createExamen(formDataExamen);
         
@@ -168,13 +162,7 @@ const Tratamiento = ({ formData, setFormData }) => {
           fecha_modificacion: new Date().toISOString()
         };
 
-        await createAuditoria({
-          id_usuario: loggedInUserId,
-          modulo: "Examenes",
-          operacion: "Crear",
-          detalle: JSON.stringify(auditDescription),
-          fecha: new Date().toISOString()
-        });
+        await logAuditAction('CREAR_EXAMEN', auditDescription);
       }
       
       fetchExamenes();
@@ -222,13 +210,7 @@ const Tratamiento = ({ formData, setFormData }) => {
         fecha_modificacion: new Date().toISOString()
       };
 
-      await createAuditoria({
-        id_usuario: loggedInUserId,
-        modulo: "Examenes",
-        operacion: "Eliminar",
-        detalle: JSON.stringify(auditDescription),
-        fecha: new Date().toISOString()
-      });
+      await logAuditAction('ELIMINAR_EXAMEN', auditDescription);
 
       fetchExamenes();
     } catch (error) {
@@ -284,13 +266,7 @@ const Tratamiento = ({ formData, setFormData }) => {
         fecha_modificacion: new Date().toISOString()
       };
 
-      await createAuditoria({
-        id_usuario: loggedInUserId,
-        modulo: "Examenes",
-        operacion: "Editar2",
-        detalle: JSON.stringify(auditDescription),
-        fecha: new Date().toISOString()
-      });
+      await logAuditAction('ACTUALIZAR_ESTADO_EXAMEN', auditDescription);
 
       fetchExamenes();
     } catch (error) {
