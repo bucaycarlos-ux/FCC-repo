@@ -23,6 +23,12 @@ import Perfil from './modules/usuarios/views/Perfil';
 import Auditoria from './modules/auditoria/view/Auditoria';
 import VerAuditorias from './modules/auditoria/componets/verAuditorias';
 import ExportarAuditorias from './modules/auditoria/componets/exportarAuditoria';
+import Comunidad from './modules/comunidad/Comunidad';
+import Personas from './modules/comunidad/Personas';
+import Interacciones from './modules/comunidad/Interacciones';
+import AddPersona from './modules/comunidad/AddPersona';
+import AddInteraccion from './modules/comunidad/AddInteraccion';
+import PersonaInteracciones from './modules/comunidad/PersonaInteracciones';
 
 
 // ✅ Importa el chatbot
@@ -103,6 +109,30 @@ function App() {
             <Route 
               path="/fcc-exportar-auditoria"
               element={<PrivateRoute element={ExportarAuditorias} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad"
+              element={<PrivateRoute element={Comunidad} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad/personas"
+              element={<PrivateRoute element={Personas} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad/personas/nueva"
+              element={<PrivateRoute element={AddPersona} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad/personas/:id/interacciones"
+              element={<PrivateRoute element={PersonaInteracciones} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad/interacciones"
+              element={<PrivateRoute element={Interacciones} allowedRoles={['admin']} />} 
+            />
+            <Route 
+              path="/fcc-comunidad/interacciones/nueva"
+              element={<PrivateRoute element={AddInteraccion} allowedRoles={['admin']} />} 
             />
             <Route 
               path="/accessdenied"
