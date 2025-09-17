@@ -14,11 +14,11 @@ const swaggerDefinitions = {
       description: "Operaciones relacionadas con atenciones médicas",
     },
     {
-      name: "Auditorías",
+      name: "Auditorias",
       description: "Operaciones relacionadas con el registro de auditorías",
     },
     {
-      name: "Diagnóstico",
+      name: "Diagnósticos",
       description: "Operaciones relacionadas con diagnósticos médicos",
     },
     {
@@ -61,6 +61,30 @@ const swaggerDefinitions = {
     {
       name: "Usuarios",
       description: "Operaciones relacionadas con usuarios del sistema",
+    },
+    {
+      name: "Cantones",
+      description: "Operaciones relacionadas con los cantones",
+    },
+    {
+      name: "Interacciones",
+      description: "Operaciones relacionadas con las interacciones",
+    },
+    {
+      name: "Parroquias",
+      description: "Operaciones relacionadas con las parroquias",
+    },
+    {
+      name: "Personas",
+      description: "Operaciones relacionadas con las personas",
+    },
+    {
+      name: "Provincias",
+      description: "Operaciones relacionadas con las provincias",
+    },
+    {
+      name: "Tipos de Persona",
+      description: "Operaciones relacionadas con los tipos de persona",
     },
   ],
   components: {
@@ -122,6 +146,23 @@ const swaggerDefinitions = {
           },
         },
       },
+      Canton: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID del cantón",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre del cantón",
+          },
+          id_provincia: {
+            type: "string",
+            description: "ID de la provincia a la que pertenece el cantón",
+          },
+        },
+      },
       Diagnostico: {
         type: "object",
         properties: {
@@ -173,12 +214,56 @@ const swaggerDefinitions = {
           },
         },
       },
+      Interaccion: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID de la interacción",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre de la interacción",
+          },
+        },
+      },
       Paciente: {
         type: "object",
         properties: {
           id: { type: "string", description: "ID del paciente" },
           nombre: { type: "string", description: "Nombre del paciente" },
           estado: { type: "string", description: "Estado del paciente" },
+        },
+      },
+      Parroquia: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID de la parroquia",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre de la parroquia",
+          },
+          id_canton: {
+            type: "string",
+            description: "ID del cantón al que pertenece la parroquia",
+          },
+        },
+      },
+      Persona: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID de la persona",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre de la persona",
+          },
+          // Agrega aquí el resto de las propiedades de la persona
         },
       },
       PersonalSalud: {
@@ -192,6 +277,19 @@ const swaggerDefinitions = {
           especialidad: {
             type: "string",
             description: "Especialidad del personal de salud",
+          },
+        },
+      },
+      Provincia: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID de la provincia",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre de la provincia",
           },
         },
       },
@@ -228,6 +326,19 @@ const swaggerDefinitions = {
           nombre: {
             type: "string",
             description: "Nombre del tipo de especialidad",
+          },
+        },
+      },
+      TipoPersona: {
+        type: "object",
+        properties: {
+          id: {
+            type: "string",
+            description: "ID del tipo de persona",
+          },
+          nombre: {
+            type: "string",
+            description: "Nombre del tipo de persona",
           },
         },
       },
@@ -495,7 +606,7 @@ const swaggerDefinitions = {
     "/api/fcc/diagnostico": {
       get: {
         summary: "Obtiene todos los diagnósticos",
-        tags: ["Diagnóstico"],
+        tags: ["Diagnósticos"],
         responses: {
           200: {
             description: "Lista de diagnósticos",
@@ -512,7 +623,7 @@ const swaggerDefinitions = {
       },
       post: {
         summary: "Crea un nuevo diagnóstico",
-        tags: ["Diagnóstico"],
+        tags: ["Diagnósticos"],
         requestBody: {
           required: true,
           content: {
