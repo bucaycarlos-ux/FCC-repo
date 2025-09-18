@@ -18,8 +18,8 @@ class InteraccionService  {
       const res = await models.Interaccion.findAll({
         include: [{
           model: models.Persona,
-          as: 'personas',
-          where: { id: idPersona }
+          as: 'personasAsociadas',
+          where: { id_persona: idPersona }
         }]
       });
       return res;
