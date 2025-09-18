@@ -30,6 +30,17 @@ class PersonaService  {
       await model.destroy();
       return { deleted: true };
     }
+
+    async findByInteraccionId(idInteraccion) {
+      const res = await models.Persona.findAll({
+        include: [{
+          model: models.Interaccion,
+          as: 'interaccionesAsociadas',
+          where: { id_interaccion: idInteraccion }
+        }]
+      });
+      return res;
+    }
   
   }
   
