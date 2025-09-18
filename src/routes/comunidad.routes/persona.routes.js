@@ -120,4 +120,31 @@ router.put('/:id', personaController.update);
  */
 router.delete('/:id', personaController._delete);
 
+/**
+ * @swagger
+ * /api/fcc/persona/interaccion/{idInteraccion}:
+ *   get:
+ *     summary: Obtiene las personas asociadas a una interacción por ID
+ *     tags: [Personas]
+ *     parameters:
+ *       - in: path
+ *         name: idInteraccion
+ *         required: true
+ *         schema:
+ *           type: string
+ *         description: ID de la interacción
+ *     responses:
+ *       200:
+ *         description: Lista de personas asociadas a la interacción
+ *         content:
+ *           application/json:
+ *             schema:
+ *               type: array
+ *               items:
+ *                 $ref: '#/components/schemas/Persona'
+ *       404:
+ *         description: Interacción no encontrada o sin personas asociadas
+ */
+router.get('/interaccion/:idInteraccion', personaController.getByInteraccionId);
+
 module.exports = router;
