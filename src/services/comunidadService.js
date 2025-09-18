@@ -26,12 +26,28 @@ const getInteracciones = () => {
   return axios.get(`${API_URL}/interaccion`);
 };
 
+const getInteraccionesByPersona = (idPersona) => {
+  return axios.get(`${API_URL}/interaccion/persona/${idPersona}`);
+};
+
 const createPersona = (persona) => {
   return axios.post(`${API_URL}/persona`, persona);
 };
 
 const createInteraccion = (interaccion) => {
   return axios.post(`${API_URL}/interaccion`, interaccion);
+};
+
+const getInteraccionById = (id) => {
+  return axios.get(`${API_URL}/interaccion/${id}`);
+};
+
+const updateInteraccion = (id, interaccion) => {
+  return axios.put(`${API_URL}/interaccion/${id}`, interaccion);
+};
+
+const getPersonasByInteraccion = (idInteraccion) => {
+  return axios.get(`${API_URL}/persona/interaccion/${idInteraccion}`);
 };
 
 export default {
@@ -41,6 +57,10 @@ export default {
   getPersonas,
   getTiposPersona,
   getInteracciones,
+  getInteraccionesByPersona,
   createPersona,
   createInteraccion,
+  getInteraccionById,
+  updateInteraccion,
+  getPersonasByInteraccion,
 };
