@@ -25,7 +25,7 @@ const AddInteraccion = () => {
   const [tipo, setTipo] = useState("");
   const [fechaInicio, setFechaInicio] = useState("");
   const [fechaFin, setFechaFin] = useState("");
-  const [archivo, setArchivo] = useState("");
+  const [selectedFile, setSelectedFile] = useState(null);
   const [observaciones, setObservaciones] = useState("");
   const [estado, setEstado] = useState("Activa");
   const navigate = useNavigate();
@@ -45,19 +45,25 @@ const AddInteraccion = () => {
     setSelectedPersonas(typeof value === 'string' ? value.split(',') : value);
   };
 
+  const handleFileChange = (event) => {
+    setSelectedFile(event.target.files[0]);
+  };
+
   const handleSubmit = (event) => {
     event.preventDefault();
-    const interaccion = {
-      descripcion_interaccion: descripcion,
-      tipo_interaccion: tipo,
-      fecha_inicio_interaccion: fechaInicio,
-      fecha_fin_interaccion: fechaFin,
-      archivo_interaccion: archivo,
-      observciones_interaccion: observaciones,
-      estado_interaccion: estado,
-      personas: selectedPersonas,
-    };
-    comunidadService.createInteraccion(interaccion).then(() => {
+    const formData = new FormData();
+    formData.append('descripcion_interaccion', descripcion);
+    formData.append('tipo_interaccion', tipo);
+    formData.append('fecha_inicio_interaccion', fechaInicio);
+    formData.append('fecha_fin_interaccion', fechaFin);
+    formData.append('observciones_interaccion', observaciones);
+    formData.append('estado_interaccion', estado);
+    selectedPersonas.forEach(id => formData.append('personas[]', id));
+    if (selectedFile) {
+      formData.append('archivo_interaccion', selectedFile);
+    }
+
+    comunidadService.createInteraccion(formData).then(() => {
       navigate(-1);
     });
   };
@@ -126,13 +132,20 @@ const AddInteraccion = () => {
               shrink: true,
             }}
           />
-          <TextField
-            label="Archivo"
-            fullWidth
-            sx={{ mb: 2 }}
-            value={archivo}
-            onChange={(e) => setArchivo(e.target.value)}
-          />
+          <Box sx={{ mb: 2 }}>
+            <Button
+              variant="contained"
+              component="label"
+            >
+              Subir Archivo
+              <input
+                type="file"
+                hidden
+                onChange={handleFileChange}
+              />
+            </Button>
+            {selectedFile && <Typography sx={{ ml: 2, display: 'inline' }}>{selectedFile.name}</Typography>}
+          </Box>
           <TextField
             label="Observaciones"
             fullWidth

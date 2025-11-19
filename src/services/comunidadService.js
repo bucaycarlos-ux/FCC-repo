@@ -36,9 +36,18 @@ const createPersona = (persona) => {
   return axios.post(`${API_URL}/persona`, persona);
 };
 
-const createInteraccion = (interaccion) => {
-  logAuditAction('CREAR_INTERACCION', { newData: interaccion });
-  return axios.post(`${API_URL}/interaccion`, interaccion);
+const createInteraccion = (formData) => {
+  // FormData can't be stringified directly. Extract data for logging.
+  const logData = {};
+  for (let [key, value] of formData.entries()) {
+    logData[key] = value;
+  }
+  logAuditAction('CREAR_INTERACCION', { newData: logData });
+  return axios.post(`${API_URL}/interaccion`, formData, {
+    headers: {
+      'Content-Type': 'multipart/form-data',
+    },
+  });
 };
 
 const getInteraccionById = (id) => {
