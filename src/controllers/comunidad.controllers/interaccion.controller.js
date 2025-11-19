@@ -4,7 +4,12 @@ const service = new InteraccionService();
 
 const create = async ( req, res ) => {
     try { 
-        const response = await service.create(req.body);
+        const { body, file } = req;
+        if (file) {
+            // Assuming the 'uploads' directory is served statically at the root
+            body.archivo_interaccion = `/uploads/comunidad/interacciones/${file.filename}`;
+        }
+        const response = await service.create(body);
         res.json({ success: true, data: response});
     } catch (error) {
         res.status(500).send({ success: false, message: error.message });

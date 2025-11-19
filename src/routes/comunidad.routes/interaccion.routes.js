@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const interaccionController = require('../../controllers/comunidad.controllers/interaccion.controller');
+const multer = require('multer');
+const multerConfigInteraccion = require('../../utils/multerConfigInteraccion');
+
+const upload = multer(multerConfigInteraccion);
 
 /**
  * @swagger
@@ -56,21 +60,39 @@ router.get('/:id', interaccionController.getById);
  * @swagger
  * /api/fcc/interaccion:
  *   post:
- *     summary: Crea una nueva interacción
+ *     summary: Crea una nueva interacción con un archivo adjunto
  *     tags: [Interacciones]
  *     requestBody:
  *       required: true
  *       content:
- *         application/json:
+ *         multipart/form-data:
  *           schema:
- *             $ref: '#/components/schemas/Interaccion'
+ *             type: object
+ *             properties:
+ *               archivo_interaccion:
+ *                 type: string
+ *                 format: binary
+ *               descripcion_interaccion:
+ *                 type: string
+ *               tipo_interaccion:
+ *                 type: string
+ *               fecha_inicio_interaccion:
+ *                 type: string
+ *                 format: date-time
+ *               fecha_fin_interaccion:
+ *                 type: string
+ *                 format: date-time
+ *               observciones_interaccion:
+ *                 type: string
+ *               estado_interaccion:
+ *                 type: string
  *     responses:
  *       201:
  *         description: Interacción creada exitosamente
  *       400:
  *         description: Datos de entrada inválidos
  */
-router.post('/', interaccionController.create);
+router.post('/', upload.single('archivo_interaccion'), interaccionController.create);
 
 /**
  * @swagger
