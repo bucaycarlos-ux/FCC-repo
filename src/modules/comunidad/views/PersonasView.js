@@ -123,6 +123,15 @@ const Personas = () => {
                         variant="contained"
                         color="secondary"
                         size="small"
+                        sx={{ mr: 1 }}
+                        onClick={() => navigate(`/fcc-comunidad/personas/${persona.id_persona}/editar`)}
+                      >
+                        Editar
+                      </Button>
+                      <Button
+                        variant="contained"
+                        color="error"
+                        size="small"
                         onClick={() => handleDelete(persona.id_persona)}
                       >
                         Eliminar

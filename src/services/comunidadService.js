@@ -63,6 +63,11 @@ const getPersonaById = (id) => {
   return axios.get(`${API_URL}/persona/${id}`);
 };
 
+const updatePersona = (id, persona) => {
+  logAuditAction('ACTUALIZAR_PERSONA', { personaId: id, updatedData: persona });
+  return axios.put(`${API_URL}/persona/${id}`, persona);
+};
+
 const comunidadService = {
   getCantones,
   getParroquias,
@@ -78,6 +83,7 @@ const comunidadService = {
   getPersonasByInteraccion,
   deletePersona,
   getPersonaById,
+  updatePersona,
 };
 
 export default comunidadService;
