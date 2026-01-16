@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import {
+
   Box,
   Container,
   Paper,
@@ -42,6 +43,18 @@ const menuData = [
     nombre_menu: "Comunidad",
     url: "/fcc-comunidad",
     icon: <GroupIcon />,
+    roles: ["admin"],
+  },
+  {
+    nombre_menu: "Normativas",
+    url: "/fcc-normativa",
+    icon: <AssignmentIcon />,
+    roles: ["admin"],
+  },
+  {
+    nombre_menu: "Procesos",
+    url: "/fcc-proceso",
+    icon: <AssignmentIcon />,
     roles: ["admin"],
   },
   {

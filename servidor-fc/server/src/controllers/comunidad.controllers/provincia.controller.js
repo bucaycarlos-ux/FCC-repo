@@ -1,4 +1,4 @@
-const ProvinciaService = require('../../services/comunidad.services/provincia.services');
+const ProvinciaService = require('../../services/comunidad.services/provincia.service');
 const service = new ProvinciaService();
 
 

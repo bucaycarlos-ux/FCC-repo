@@ -1,4 +1,4 @@
-const PersonaService = require('../../services/comunidad.services/persona.services');
+const PersonaService = require('../../services/comunidad.services/persona.service');
 const service = new PersonaService();
 
 

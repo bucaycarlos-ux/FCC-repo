@@ -1,4 +1,4 @@
-const ParroquiaService = require('../../services/comunidad.services/parroquia.services');
+const ParroquiaService = require('../../services/comunidad.services/parroquia.service');
 const service = new ParroquiaService();
 
 

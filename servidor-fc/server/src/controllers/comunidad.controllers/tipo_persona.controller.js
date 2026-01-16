@@ -1,4 +1,4 @@
-const TipoPersonaService = require('../../services/comunidad.services/tipo_persona.services');
+const TipoPersonaService = require('../../services/comunidad.services/tipo_persona.service');
 const service = new TipoPersonaService();
 
 

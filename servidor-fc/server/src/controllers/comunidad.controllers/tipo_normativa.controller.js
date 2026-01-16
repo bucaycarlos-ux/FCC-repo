@@ -1,17 +1,17 @@
-const CantonService = require('../../services/comunidad.services/canton.service');
-const service = new CantonService();
+const TipoNormativaService = require('../../services/comunidad.services/tipo_normativa.service');
+const service = new TipoNormativaService();
 
 
-const create = async ( req, res ) => {
-    try { 
+const create = async(req, res) => {
+    try {
         const response = await service.create(req.body);
-        res.json({ success: true, data: response});
+        res.json({ success: true, data: response });
     } catch (error) {
         res.status(500).send({ success: false, message: error.message });
     }
 }
 
-const get = async ( req, res ) => {
+const get = async(req, res) => {
     try {
         const response = await service.find();
         res.json(response);
@@ -20,7 +20,7 @@ const get = async ( req, res ) => {
     }
 }
 
-const getById = async ( req, res ) => {
+const getById = async(req, res) => {
     try {
         const { id } = req.params;
         const response = await service.findOne(id);
@@ -30,20 +30,20 @@ const getById = async ( req, res ) => {
     }
 }
 
-const update = async (req, res) => {
+const update = async(req, res) => {
     try {
         const { id } = req.params;
         const body = req.body;
-        const response = await service.update(id,body);
+        const response = await service.update(id, body);
         res.json(response);
     } catch (error) {
         res.status(500).send({ success: false, message: error.message });
     }
 }
 
-const _delete = async (req, res) => {
+const _delete = async(req, res) => {
     try {
-        const { id } = req.params; 
+        const { id } = req.params;
         const response = await service.delete(id);
         res.json(response);
     } catch (error) {
@@ -51,6 +51,12 @@ const _delete = async (req, res) => {
     }
 }
 
+
+
 module.exports = {
-    create, get, getById, update, _delete
+    create,
+    get,
+    getById,
+    update,
+    _delete
 };

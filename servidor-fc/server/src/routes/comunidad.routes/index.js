@@ -1,12 +1,16 @@
 const express = require('express'); 
 
-const provinciaRouter = require('./provincia.routes');
-const cantonRouter = require('./canton.routes');
-const parroquiaRouter = require('./parroquia.routes');
-const tipo_personaRouter = require('./tipo_persona.routes');
+const provinciaRouter = require('./provincia.route');
+const cantonRouter = require('./canton.route');
+const parroquiaRouter = require('./parroquia.route');
+const tipo_personaRouter = require('./tipo_persona.route');
 
-const personaRouter = require('./persona.routes');
-const interaccionRouter = require('./interaccion.routes');
+const personaRouter = require('./persona.route');
+const interaccionRouter = require('./interaccion.route');
+const procesosRouter = require('./procesos.route');
+const tipoprocesoRouter = require('./tipoproceso.route');
+const normativaRouter = require('./normativa.route');
+const tipo_normativaRouter = require('./tipo_normativa.route');
 
 
 
@@ -22,6 +26,10 @@ function setupComunidadRoutes(router) {
   router.use('/tipo_persona', tipo_personaRouter)
   router.use('/persona', personaRouter)
   router.use('/interaccion', interaccionRouter)
+  router.use('/procesos', procesosRouter)
+  router.use('/tipoproceso', tipoprocesoRouter)
+  router.use('/normativa', normativaRouter)
+  router.use('/tipo_normativa', tipo_normativaRouter)
 
   }
 

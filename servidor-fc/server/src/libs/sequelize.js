@@ -24,4 +24,4 @@ const sequelize = new Sequelize(
   setupModels(sequelize);
   sequelize.sync(); /*Sincronizar model EDR */ 
 
-module.exports = sequelize;
+module.exports = { sequelize, models: sequelize.models };

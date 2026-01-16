@@ -1,5 +1,5 @@
-const CantonService = require('../../services/comunidad.services/canton.service');
-const service = new CantonService();
+const TipoprocesoService = require('../../services/comunidad.services/tipoproceso.service');
+const service = new TipoprocesoService();
 
 
 const create = async ( req, res ) => {
@@ -50,6 +50,8 @@ const _delete = async (req, res) => {
         res.status(500).send({ success: false, message: error.message });
     }
 }
+
+
 
 module.exports = {
     create, get, getById, update, _delete

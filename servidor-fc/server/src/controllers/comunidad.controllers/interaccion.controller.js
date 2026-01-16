@@ -1,4 +1,4 @@
-const InteraccionService = require('../../services/comunidad.services/interaccion.services');
+const InteraccionService = require('../../services/comunidad.services/interaccion.service');
 const service = new InteraccionService();
 
 
